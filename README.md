@@ -2,7 +2,7 @@
 
 Bookstack PDF轉出會亂碼的原因為，image裡不支援中文字，及使用的PDF exporter不支援中文輸出格式，Bookstack官方使用的PDF Export 為 dompdf ，dompdf主要是用在Laravel 框架下的一項 HTML 內容轉換成 PDF 文件的工具，但由於dompdf處理中文亂碼的問題，過於複雜，且會增加重新打包image的流程，本次略過，找了網路上許多方法，都建議使用wkhtmltopdf來代替，但經過反覆測試都會失敗，後來查看官方文件，發現自從BookStack v24.05後，就不支援使用wkhtmltopdf，如下圖:
 
-![image](wkhtmltopdf.png)
+![image](https://github.com/steven502041/Bookstack-PDF-Export-/blob/main/img/wkhtmltopdf.png)
 
 官方有給出別的替代方法，改使用Weasyprint，他也是一種把HTML轉換成PDF的工具，詳情可以瀏覽連結
 
@@ -128,7 +128,7 @@ https://launchpad.net/ubuntu/jammy/+package/fonts-noto-cjk
 
 為求image最小化，我是另外將字體下載並納入使用 ( 使用者可以斟酌使用，容量差70MB)
 
-![image](Noto Sans CJK.png)
+![image](https://github.com/steven502041/Bookstack-PDF-Export-/blob/main/img/Noto%20Sans%20CJK.png)
 
 ```docker
 FROM alpine:3 AS bookstack
