@@ -12,10 +12,10 @@ https://doc.courtbouillon.org/weasyprint/stable/
 
 # 二. 解決辦法
 
-釐清了上述問題後，需要解決兩個問題
+ 釐清了上述問題後，需要解決兩個問題
 
-## 1. 需要重新打包image，加入免版權中文字檔並安裝weasyprint
-## 2. 在部屬app時，加入特定參數，讓他使用weasyprint，作為`EXPORT_PDF_COMMAND`的工具
+1. 需要重新打包image，加入免版權中文字檔並安裝weasyprint
+2. 在部屬app時，加入特定參數，讓他使用weasyprint，作為`EXPORT_PDF_COMMAND`的工具
 
 下方解決流程，可搭配folder [docker-bookstack-master](https://github.com/steven502041/Bookstack-PDF-Export-/tree/main/docker-bookstack-master)，相互檢閱
 
