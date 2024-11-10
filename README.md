@@ -1,7 +1,8 @@
 # 一. 問題釐清
 
-Bookstack PDF轉出會亂碼的原因為使用的container image的Alpine Linux 無安裝中文字體及Bookstack使用的PDF exporter不支援中文輸出格式，Bookstack官方使用的PDF Export 為 dompdf ，dompdf主要是用在Laravel 框架下的一項 HTML 內容轉換成 PDF 文件的工具，但由於dompdf處理中文亂碼的問題，過於複雜，且會增加重新打包image的流程，本次略過，找了網路上許多方法，都建議使用wkhtmltopdf來代替，但經過反覆測試都會失敗，後來查看官方文件，發現自從BookStack v24.05後，就不支援使用wkhtmltopdf，如下圖:
+**Bookstack PDF轉出會亂碼的原因為:**
 
+使用的container image的Alpine Linux 無安裝中文字體及Bookstack使用的PDF exporter不支援中文輸出格式，Bookstack官方使用的PDF Export 為 dompdf ，dompdf主要是用在Laravel 框架下的一項 HTML 內容轉換成 PDF 文件的工具，但由於dompdf處理中文亂碼的問題，過於複雜，且會增加重新打包image的流程，本次略過，找了網路上許多方法，都建議使用wkhtmltopdf來代替，但經過反覆測試都會失敗，後來查看官方文件，發現自從BookStack v24.05後，就不支援使用wkhtmltopdf，如下圖:
 ![image](https://github.com/steven502041/Bookstack-PDF-Export-/blob/main/img/wkhtmltopdf.png)
 
 官方有給出別的替代方法，改使用Weasyprint，他也是一種把HTML轉換成PDF的工具，詳情可以瀏覽連結:
@@ -15,7 +16,7 @@ https://doc.courtbouillon.org/weasyprint/stable/
  釐清了上述問題後，需要解決兩個問題
 
 1. 需要重新打包image，加入免版權中文字檔並安裝weasyprint
-2. 在部屬app時，加入特定參數，讓他使用weasyprint，作為`EXPORT_PDF_COMMAND`的工具
+2. 在部屬app時，需加入特定參數，讓他使用weasyprint，作為``EXPORT_PDF_COMMAND``的工具
 
 下方解決流程，可搭配folder [docker-bookstack-master](https://github.com/steven502041/Bookstack-PDF-Export-/tree/main/docker-bookstack-master)，相互檢閱
 
@@ -128,7 +129,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 https://launchpad.net/ubuntu/jammy/+package/fonts-noto-cjk
 
-為求image最小化，我是另外將字體下載並納入使用 ( 使用者可以斟酌使用，容量差70MB)
+為求image最小化，我是另外將繁中字體下載並納入使用 ( 使用者可以斟酌使用，容量差70MB)
 
 ![image](https://github.com/steven502041/Bookstack-PDF-Export-/blob/main/img/Noto%20Sans%20CJK.png)
 
@@ -234,7 +235,7 @@ docker buildx build --platform linux/amd64 -t bookstack-chinese-pdf-exporter .
 
 ### 二 . 加入特定參數，讓他使用weasyprint，作為`EXPORT_PDF_COMMAND`的工具
 
-加入特定參數參數，讓bookstack使用weasyprint作為PDF Exporter的工具，而並非原本的dompdf 
+在啟動app時，加入特定參數參數，讓bookstack使用weasyprint作為PDF Exporter的工具，而並非原本的dompdf 
 
 使用官方提供的docker-compse，將image換成剛剛打包好的image，或使用筆者已經打包好的image
 
